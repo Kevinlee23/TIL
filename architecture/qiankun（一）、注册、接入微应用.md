@@ -11,12 +11,14 @@
 1. 通用中心路由基座：只有公共功能的主应用
 2. 特定中心路由基座：一个包含业务代码的项目
 
-#### 注册微应用的方式 ———— 自动模式（推荐）
+#### 注册微应用的方式
+
+##### 自动模式（推荐）
 
 使用 registerMicroApps + start, 路由变化加载微应用（一旦浏览器的 url 发生变化，便会自动触发 qiankun 的匹配）
 
 ```javascript
-// 主应用（基座）安装
+// 主应用 (基座) 安装
 yarn add qiankun
 ```
 
@@ -29,7 +31,7 @@ const MICRO_CONFIG = [
   {
     // 基础配置
     name: "appName", // 应用名字
-    entry: "http://localhost:host", // 加载这个html 解析里面的js 动态的执行 (! 子应用必须支持跨域)fetch
+    entry: "http://localhost:host", // 加载这个html 解析里面的js 动态的执行 (子应用必须支持跨域)fetch
     container: "#containerId", // 挂载具体容器ID
     activeRule: "appActiveRoute", // 根据路由匹配, 激活子应用
     // 下发给子应用的状态, 方法
@@ -37,8 +39,11 @@ const MICRO_CONFIG = [
       globalState: ...,
       utils: ...
     },
+    // 其他配置
+    isPreload: true, // 是否开启预加载
+    isRouteStart: true, // 是否需要路由启动
+    unmountTime: 'Infinity', // 自动销毁时间 单位ms or Infinity(永不销毁)
   },
-  // 其他微应用
   ...
 ];
 
@@ -47,6 +52,125 @@ registerMicroApps(MICRO_CONFIG)
 
 // 3. 启动微服务
 start()
+```
+
+##### 手动挂载 (loadMicroApps)
+
+> 由于 registerMicroApps 的特性，会导致路由的 keep alive 失效，可以使用 loadMicroApp + router.beforeEach 来达到自动注册的目的
+
+```javascript
+import { loadMicroApp } from 'qiankun'
+
+// 获取应用配置并手动挂载, 挂载后返回挂载对象
+this.microApp = loadMicroApp({
+  name: 'vue app',
+  entry: 'http:localhost:host',
+  container: '#containerId',
+  activeRule: '/appActiveRoute',
+  props: {...}
+})
+
+this.microApp.unmount() // 手动卸载
+```
+
+#### 预加载微应用
+
+> 预先请求子应用的 HTML, JS, Css 等静态资源，等切换子应用时，可以直接从缓存中读取这些静态资源从而加快渲染子应用
+
+##### registerMicroApps 模式（自动模式）下
+
+```javascript
+import { registerMicroApps, start } from "qiankun";
+
+registerMicroApps([...AppsConfig]);
+start({ prefetch: "all" }); // 配置预加载
+```
+
+##### loadMicroApps 模式（手动模式）下
+
+```javascript
+// @/const/micro/application-list.js
+export const MICRO_CONFIG = [
+  {
+    name: "you app name", // 应用的名字
+    entry: "//localhost:7286/", // 默认会加载这个html 解析里面的js 动态的执行 （子应用必须支持跨域）fetch
+    container: "#yuo-container-container", // 容器id
+    activeRule: "/your-prefix", // 根据路由激活的路径
+    isPreload: true, // !! 是否开启预加载 !!
+  },
+];
+
+// other file
+import { prefetchApps } from "qiankun";
+import { MICRO_CONFIG } from "@/const/micro/application-list.js";
+
+// 获取配置的 isPreload 字段，并生成加载对应的格式
+const MICRO_PREFETCH_APPS = MICRO_CONFIG.reduce(
+  (total, { isPreload, name, entry }) =>
+    isPreload ? [...total, { name, entry }] : total,
+  []
+);
+
+prefetchApps(MICRO_PREFETCH_APPS);
+```
+
+#### loadMicroApps 模式（手动模式）下，使用 store 来存储 并配合路由守卫，操作当前启动的微应用列表, 可以 keep alive
+
+主应用 router 路由守卫
+
+```javascript
+router.afterEach((to) => {
+  // microApplicationLoading 方法: https://juejin.cn/post/7069566144750813197#heading-21
+  setimeout(() => {
+    microApplicationLoading(to.path);
+  });
+});
+```
+
+主应用中 store 配置
+
+```javascript
+import { defineStore } from "pinia";
+import { prefetchApps } from "qiankun";
+import { microApplicationList } from "@/const/micro/application-list.js";
+
+export const MAX_RUN_MICRO_NUMBER = 10; // 最大运行的微应用数量
+// 获取配置的 isPreload 字段，并生成加载对应的格式
+const MICRO_PREFETCH_APPS = microApplicationList.reduce(
+  (total, { isPreload, name, entry }) =>
+    isPreload ? [...total, { name, entry }] : total,
+  []
+);
+// 预加载应用
+prefetchApps(MICRO_PREFETCH_APPS);
+
+const useMicroStore = defineStore("micro", {
+  state: () => ({
+    microApplicationList: new Map([]),
+  }),
+  actions: {
+    // 设置微应用列表
+    setMicroApplication({ key, value }) {},
+    // 通过当前路径获取微应用配置
+    findMicroConfigByPath(path) {},
+    // 检查是否需要卸载微应用
+    checkUnmountMicro(list, currentActiveMicroConfig) {},
+    // 删除微应用列表
+    deleteMicroApplication(key) {
+      const micro = this.microApplicationList.get(key);
+      micro && micro.unmount();
+      this.microApplicationList.delete(key);
+    },
+    // 检查是否需要清空堆栈
+    clearMicroStack() {
+      if (MAX_RUN_MICRO_NUMBER === "infinity") return;
+      if (this.microApplicationList.size < MAX_RUN_MICRO_NUMBER) return;
+
+      const key = this.microApplicationList.keys().next().value;
+      this.deleteMicroApplication(key);
+    },
+  },
+});
 ```
 
 #### 微应用挂载场景 ———— 根 DOM 中与主应用同级挂载，显示当前应用
