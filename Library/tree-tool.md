@@ -1,5 +1,8 @@
 ### 使用 tree-tool 工具库来处理树形结构
 
+工具库资料: https://wintc.top/article/26
+github: https://github.com/wintc23/js-tree-tool
+
 #### 基本原理
 
 ##### 结构
@@ -201,7 +204,68 @@ function treeToList2(tree) {
 }
 ```
 
-
-
 #### 其他功能性方法
-:TODO
+
+##### 树结构筛选
+
+```javascript
+function treeFilter(tree, func) {
+  // 使用map复制一下节点, 避免修改到原树
+  return tree
+    .map((node) => ({ ...node }))
+    .filter((node) => {
+      node.children = node.children && treeFilter(node.children, func);
+
+      return func(node) || (node.children && node.children.length);
+    });
+}
+```
+
+##### 树结构查找
+
+```javascript
+// 查找节点
+function treeFindNode(tree, func) {
+  for (const node of tree) {
+    if (func(node)) return node;
+    if (node.children) {
+      const res = treeFindNode(data.children, func);
+      if (res) return res;
+    }
+  }
+
+  return null;
+}
+
+// 查找节点路径
+function treeFindPath(tree, func, path = []) {
+  if (!tree) return [];
+  for (const node of tree) {
+    path.push(node.id);
+    if (func(node)) return path;
+    if (node.children) {
+      const findChildren = treeFindPath(node.children, func, path);
+      if (findChildren.length) return findChildren;
+    }
+
+    // 回溯
+    path.pop();
+  }
+
+  return [];
+}
+
+// 查找多条路径
+function treeFindMorePath(tree, func, path = [], result = []) {
+  for (const node of tree) {
+    path.push(node.id);
+    func(data) && result.push([...path]);
+    data.children && treeFindMorePath(node.children, func, path, result);
+
+    // 回溯
+    path.pop();
+  }
+
+  return result;
+}
+```
