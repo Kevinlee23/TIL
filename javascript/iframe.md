@@ -61,8 +61,8 @@ iframe 标签承载了一个单独的嵌入的窗口，它有自己的 document 
 
 获取 `<iframe>` 的方式:
 
-- window.frames[0] 通过索引获取
-- window.frames.iframeName 通过名称获取
+- `window.frames[0]` 通过索引获取
+- `window.frames.iframeName` 通过名称获取
 
 #### iframe 通信
 
