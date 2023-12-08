@@ -105,3 +105,37 @@ v-show => v-show / vShow
 v-model 同模板语法
 
 ##### 插槽
+
+vue3 插槽
+`预留插槽`
+
+```javascript
+export default {
+  name: "CustomComponent",
+  props: ["message"],
+  setup(props, { slots }) {
+    return () => (
+      <>
+        <div>{slots.default ? slots.default() : "Hello"}</div>
+        <div>{slots.bar?.()}</div>
+        <div>{slots.foo?.({ text: props.message })}</div>
+      </>
+    );
+  },
+};
+```
+
+`传入插槽`
+
+```javascript
+const slots = {
+  bar: () => <span>bar</span>,
+  foo: ({ text }) => <span>Hello, {text}</span>,
+};
+
+const render = () => (
+  <CustomComponent v-slots={slots}>
+    <div>Hello, Wolrd</div>
+  </CustomComponent>
+);
+```
