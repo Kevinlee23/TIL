@@ -7,8 +7,8 @@ const file = fileInput.files[0]; // fileInput 为 input 标签的 ref
 
 const chunks = [];
 let startPos = 0;
-while (startPost < file.size) {
-  chunks.push(file.slice(startPost, startPos + chunkSize));
+while (startPos < file.size) {
+  chunks.push(file.slice(startPos, startPos + chunkSize));
   startPos += chunkSize;
 }
 
@@ -21,13 +21,13 @@ chunks.map((chunk, index) => {
   data.append("files", chunk);
 
   // 将所有的分片上传任务保存为一个队列
-  tasks.push(axios.post("http://localhost:3000/upload", data);)
+  tasks.push(axios.post("http://localhost:3000/upload", data));
 });
 
 await Promise.all(tasks);
 
 // 结束分片上传后, 调用文件合并的接口
-axios.get('http://localhost:3000?merge?name=' + randomStr + "_" + file.name);
+axios.get("http://localhost:3000?merge?name=" + randomStr + "_" + file.name);
 ```
 
 #### 服务端接收
@@ -71,7 +71,7 @@ merge(@Query('name') name: string) {
 
       // 合并完成后将 chunks 目录删掉
       if (count === files.length) {
-        fr.rm(chunkDir, {
+        fs.rm(chunkDir, {
           recursive: true
         }, () => {});
       }
