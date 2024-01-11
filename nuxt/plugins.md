@@ -41,6 +41,29 @@ export default defineNuxtPlugin((nuxtApp) => {
 });
 ```
 
+#### 对象语法
+
+```ts
+export default defineNuxtPlugin({
+  name: "my-plugin",
+  enforce: "pre", // 或 'post'
+  async setup(nuxtApp) {
+    // 这相当于一个普通的功能性插件
+  },
+  hooks: {
+    // 这里可以直接注册Nuxt应用运行时钩子
+    "app:created"() {
+      const nuxtApp = useNuxtApp();
+      //
+    },
+  },
+  env: {
+    // 如果不希望插件在仅渲染服务器端或孤立组件时运行，请将此值设置为`false`。
+    islands: true,
+  },
+});
+```
+
 #### 注册顺序
 
 按照文件名字母顺序加载，如果你希望自己定义执行顺序，在文件名前使用`字母排序`
@@ -62,4 +85,44 @@ export default defineNuxtPlugin((nuxtApp) => {
 
 - 注册 vue 插件
 - 注册 vue 指令
-- 编写功能性插件
+- 编写功能性插件 - 对象语法中展示
+
+注册插件和指令是靠 nuxtApp (nuxt 运行时上下文) 下的 vueApp (全局 vue.js 实例) 下的：
+
+- use()
+- directive()
+  完成
+
+`注册插件`
+
+```ts
+import VueGtag, { trackRouter } from "vue-gtag-next";
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.use(VueGtag, {
+    property: {
+      id: "GA_MEASUREMENT_ID",
+    },
+  });
+  trackRouter(useRouter());
+});
+```
+
+`注册指令`
+
+```ts
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.directive("focus", {
+    mounted(el) {
+      el.focus();
+    },
+    getSSRProps(binding, vnode) {
+      // 你可以在这里提供SSR特定的props
+      return {};
+    },
+  });
+
+  // or
+  nuxtApp.vueApp.directive("directiveName");
+});
+```
