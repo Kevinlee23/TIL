@@ -73,5 +73,6 @@ https://github.com/github/gitignore
 `git commit` 提交命令
 `git commit -m "commit infomation"` 带信息的提交命令
 `git commit -a` 跳过使用暂存区域
-`git rm filename` 移除文件
-`git mv file_from file_to` 移动文件（可用于文件改名）
+`git rm <filename>` 移除文件
+`git reset <filename>` 撤销对文件的暂存
+`git mv <file_from> <file_to>` 移动文件（可用于文件改名）
