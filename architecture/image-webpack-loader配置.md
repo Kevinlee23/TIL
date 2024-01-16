@@ -4,8 +4,6 @@
 
 `npm install image-webpack-loader --save-dev`
 
-vue.config.js 配置
-
 ```js
 module.exports = {
   configureWebpack: {
