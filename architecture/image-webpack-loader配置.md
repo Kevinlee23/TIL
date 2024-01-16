@@ -4,7 +4,7 @@
 
 `npm install image-webpack-loader --save-dev`
 
-vue.config.js 配置
+#### vue-cli 项目中使用
 
 ```js
 module.exports = {
