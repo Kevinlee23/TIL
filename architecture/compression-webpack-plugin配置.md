@@ -24,6 +24,7 @@ module.exports = {
 
 ```js
 module.exports = {
+  // 基于环境有条件地配置行为, 或者想要直接修改配置, 使用函数的方式
   configureWebpack: (config) => {
     if (isProd) {
       // 启用 gzip 压缩插件
