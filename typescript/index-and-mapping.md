@@ -61,4 +61,8 @@ interface StringifiedFoo {
   prop3: string;
   prop4: string;
 }
+
+type Clone<T> = {
+  [K in keyof T]: T[K];
+};
 ```
