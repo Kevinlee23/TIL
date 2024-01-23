@@ -1,3 +1,6 @@
+### 正则表达式
+
+#### 用法
 创建:
 `const regExp = new RegExp(pattern, modifiers)`
 或者

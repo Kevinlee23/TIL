@@ -1,11 +1,11 @@
 ### Websocket
 WebSocket是一种在单个TCP连接上进行全双工通信的协议, 它允许服务器主动向客户端发送数据
 
-#### 基本使用
-##### 1. 创建对象
+### 基本使用
+#### 创建对象
 `const socket = new WebSocket('ws://example.com/socket')`
 
-##### 2. 处理事件
+#### 处理事件
 常见的事件
 - `open`: 连接建立时触发
 - `message`: 收到消息时触发
@@ -35,11 +35,11 @@ socket.addEventListener('error', (error) => {
 });
 ```
 
-##### 3. 发送数据
+#### 发送数据
 `socket.send(data)`
 data 可以是字符串, Blob, ArrayBuffer 等
 
-##### 4. 关闭连接
+#### 关闭连接
 `socket.close(code, reason)`
 code 和 reason 都是可选项
 code(0 - 999 未使用, 1000 正常关闭, 1001 终端离开, 1002 协议错误 ...)

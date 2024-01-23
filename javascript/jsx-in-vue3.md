@@ -1,6 +1,4 @@
-### 使用 jsx
-
-#### 开启 jsx
+### jsx
 
 安装 ———— `yarn add @vue/babel-plugin-vue-jsx -d`
 添加配置
@@ -15,9 +13,9 @@ export default {
 };
 ```
 
-#### 语法
+### 语法
 
-##### jsx 中禁止返回多个节点的模板
+#### jsx 中禁止返回多个节点的模板
 
 ```jsx
 // x
@@ -35,7 +33,7 @@ const  render = () => {
 }
 ```
 
-##### 传递属性
+#### 传递属性
 
 1. vue2
 
@@ -70,7 +68,7 @@ const render = () => {
 - class, style 与 vue2 相同
 - ref, 定义好 ref 后用 js 表达式
 
-##### 事件绑定
+#### 事件绑定
 
 on + 大写字母
 `onclick, click` x
@@ -97,14 +95,14 @@ const render = () => {
 };
 ```
 
-##### v-指令
+#### v-指令
 
 v-for => map 方法
 v-if => 三元表达式 ? : 或 使用 && 连接符
 v-show => v-show / vShow
 v-model 同模板语法
 
-##### 插槽
+#### 插槽
 
 vue3 插槽
 `预留插槽`

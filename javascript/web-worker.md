@@ -2,9 +2,9 @@
 
 Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，允许我们在 js 主线程之外开辟新的 Worker 线程，并将一段 js 脚本运行其中，它赋予了开发者利用 js 操作多线程的能力。
 
-#### 使用
+### 使用
 
-##### 创建 worker
+#### 创建 worker
 
 `const work = new Worker(path, options)`
 
@@ -13,7 +13,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，允�
 - option.credentials 可以指定 worker 的凭证
 - option.name 表示 worker 的 scope 的一个 DOMString 值
 
-##### js 主线程与 worker 线程数据传递
+#### js 主线程与 worker 线程数据传递
 
 主线程和 worker 线程都是通过 `postMessage` 方法来发送消息，以及通过监听 `message` 事件来接受消息:
 
@@ -39,7 +39,7 @@ self.addEvenListener("message", (e) => {
 });
 ```
 
-##### 监听错误信息
+#### 监听错误信息
 
 web worker 提供两个事件监听错误，error 和 messageerror
 
@@ -66,7 +66,7 @@ self.addEvenListener("error", (err) => {
 });
 ```
 
-##### 关闭 worker 线程
+#### 关闭 worker 线程
 
 ```javascript
 // main.js
@@ -83,7 +83,7 @@ self.close();
 - 主线程关闭，主线程 与 worker 线程之间的连接会被立刻停止，主线程不会再接收到 worker 线程当前事件循环发送的信息
 - 在 worker 线程中关闭，不会直接断开与主线程的连接，而是等 worker 线程当前的事件循环所有任务执行完在关闭。主线程还能收到 worker 线程通过 postMessage() 发送的信息
 
-##### worker 线程中引用其他 js 文件
+#### worker 线程中引用其他 js 文件
 
 ```javascript
 // utils.js
@@ -114,7 +114,7 @@ add(1, 2);
 export default self; // 把顶级对象self暴露出去
 ```
 
-##### 主线程和 worker 线程可以传递哪些数据
+#### 主线程和 worker 线程可以传递哪些数据
 
 `postMessage()` 传递的数据可以是由结构化克隆算法处理的任何值或 JavaScript 对象，包括循环引用。
 
