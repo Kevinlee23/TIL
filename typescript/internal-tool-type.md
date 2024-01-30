@@ -32,6 +32,7 @@ type NumericDictionary<T> = {
   [index: number]: T;
 };
 
+// K extends keyof T 保证 联合类型 K 中的键值都是从 T 中来的
 type Pick<T, K extends keyof T> = {
   [P in K]: T[P];
 };
@@ -43,10 +44,13 @@ type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>;
 #### 集合工具类型
 
 ```ts
-// 交集
+/**
+ * 交集和差集是利用联合类型的分布式特性完成的
+ */
+// 交集 Intersection
 type Extract<T, U> = T extends U ? T : never;
 
-// 差集
+// 差集 Exclude
 type Exclude<T, U> = T extends U ? never : T;
 
 // 并集
