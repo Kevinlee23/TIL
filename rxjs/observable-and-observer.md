@@ -13,27 +13,27 @@ Observable have 4 core concerns (process):
 import { Observable } from "rxjs";
 
 // <creating 过程>
-const stream = new Observable((observer) => {
+const stream = new Observable((subscriber) => {
   /**
    * Observable are producer of data, who push them(data) to Observers(comsumers)
-   * observer are producer, 它拥有方法: next, error, complete, 分别作用: 推送数据、报错和终止
+   * subscriber are producer, 它拥有方法: next, error, complete, 分别作用: 推送数据、报错和终止
    */
 
   try {
     // 同步方式
-    observer.next(50);
-    observer.next(100);
-    observer.next(200);
+    subscriber.next(50);
+    subscriber.next(100);
+    subscriber.next(200);
 
     // 异步方式
     setTimeout(() => {
-      observer.next(300);
+      subscriber.next(300);
     }, 1000);
   } catch (err) {
-    observer.error(err);
+    subscriber.error(err);
   }
 
-  observer.complete();
+  subscriber.complete();
 });
 
 // 观察数据 <subscribing 过程>
