@@ -2,6 +2,12 @@
 
 ```js
 function repeat(func, times, wait) {} // 实现repat方法, 使func方法重复执行times次, 每次间隔wait秒
+
+const sayHello = (name) => {
+  console.log(`hello, ${name}`);
+};
+const repeatFunc = repeat(sayHello, 4, 1000);
+repeatFunc("kevin"); // hello, kevin * 4 (time gap is 1000ms)
 ```
 
 实现:
