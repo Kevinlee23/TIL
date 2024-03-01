@@ -5,11 +5,15 @@
   <div class="relative">
     <div class="inner-container overflow-x-hidden">
       <div class="tabs-content" :class="[transformStyle]">
+        <!-- 实现tabs -->
         <div class="tabs-left">...</div>
+
+        <!-- 实现搜索input -->
         <div class="tabs-right">...</div>
       </div>
     </div>
 
+    <!-- 搜索icon -->
     <span v-show="!isHidden" ref="iconEl" class="search-icon" @click.stop="handleHidden">
       <icon>...</icon>
     </span>
@@ -21,10 +25,10 @@ import { ref, computed } from "vue";
 // tab栏是否隐藏 (打开搜索栏)
 const isHidden = ref(false);
 const transformStyle = computed(() => {
-  return isHidden.value ? "-translate-x-[50%]" : "translate-x-0";
+  return isHidden.value ? "-translated-x-[50%]" : "translate-x-0";
 });
 const handleHidden = () => {
-  isHidden.value = true;
+  isHidden.value = true; 
 };
 
 const iconEl = ref(null);
