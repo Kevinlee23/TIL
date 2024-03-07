@@ -1,4 +1,4 @@
-### mac中VSCode使用nvm永久更改node版本
+### mac 中 VSCode 使用 nvm 永久更改 node 版本
 
 向 vscode 中添加配置：
 `"terminal.integrated.inheritEnv": false`
