@@ -15,11 +15,8 @@ import { defineStore } from "pinia";
 // Pinia 将使用定义时注册的名字来连接到 devtools
 export const useTodosStore = defineStore("todos", {
   state: () => ({
-    /** @type {{ text: string, id: number, isFinished: boolean}[]} */
     todos: [],
-    /** @type {'all' | 'finished' | 'unfinished'} */
     filter: "all",
-    /** @type number */
     nextId: 0,
   }),
   getters: {
@@ -29,9 +26,6 @@ export const useTodosStore = defineStore("todos", {
     unfinishedTodos(state) {
       return state.todos.filter((todo) => !todo.isFinished);
     },
-    /**
-     * @returns {{ text: string, id: number, isFinished: boolean }[]}
-     */
     filteredTodos(state) {
       if (this.filter === "finised") {
         return this.finishedTodos;
