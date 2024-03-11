@@ -187,7 +187,7 @@ export class MyLoggerService implements LoggerService {
 
 ```ts
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.createNestExpressApplication>(AppModule);
 
   // 注册 logger
   app.useLogger(new MyLoggerService());

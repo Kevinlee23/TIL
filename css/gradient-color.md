@@ -14,7 +14,7 @@
 }
 ```
 
-![css1-1](https://github.com/Kevinlee23/TIL/blob/master/assets/css1-1.png)
+![css1-1](..\assets\css1-1.png)
 
 ##### 方向设置
 
@@ -32,7 +32,7 @@ to + 方位
 }
 ```
 
-![css1-2](https://github.com/Kevinlee23/TIL/blob/master/assets/css1-2.png)
+![css1-2](..\assets\css1-2.png)
 
 角度表示
 默认是从上往下，把中间分界线当成 0deg, 逆时针旋转 90deg 就是向右（从左向右）
@@ -61,7 +61,7 @@ to + 方位
 }
 ```
 
-![css1-3](https://github.com/Kevinlee23/TIL/blob/master/assets/css1-3.png)
+![css1-3](..\assets\css1-3.png)
 
 ##### 形状设置
 
@@ -80,4 +80,4 @@ to + 方位
 
 `background: repeating-linear-gradient(to right,orange, red 100px);`
 
-![css1-4](https://github.com/Kevinlee23/TIL/blob/master/assets/css1-4.png)
+![css1-4](..\assets\css1-4.png)

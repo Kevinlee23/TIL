@@ -1,6 +1,6 @@
 布局预期效果如下：
 
-![layout](..\assets\layout#1-preview.png)
+![layout](..\assets\layout-1-preview.png)
 
 `home.vue`
 
@@ -86,4 +86,4 @@ import AppLogo from "../components/AppLogo.vue";
 
 实际效果如下：
 
-![layout](..\assets\layout#1-display.png)
+![layout](..\assets\layout-1-display.png)

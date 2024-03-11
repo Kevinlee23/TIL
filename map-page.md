@@ -9,7 +9,7 @@ outline: deep
 
 [Typescript](./typescript/basic-object-and-function.md)
 
-[Css](./css/gradient-color.md)
+[Css](./css/layout-1.md)
 
 [Node](./node/using-js-as-shell-script-in-linux.md)
 
@@ -28,7 +28,7 @@ outline: deep
 
 [Nuxt](./nuxt/middleware.md)
 
-[Nest](<./nest/aop架构(一)%20中间件和路由守卫.md>)
+[Nest](./nest/aop架构(一)%20中间件和路由守卫.md)
 
 [qiankun](./qiankun/01.注册、接入微应用.md)
 :::

@@ -73,7 +73,7 @@ class Socket extends WebSocket {
       this._dep.notify("close", e);
       // 如果WebSocket是非正常关闭 则进行重连
       if (e.code === CLOSE_ABNORMAL) {
-        if (this._reconnectCount < this.heartCheckCount) {
+        if (this._reconnectCount this.heartCheckCount) {
           this._reconnectCount++;
           const _socket = new Socket(
             this._currentOptions,
